@@ -273,11 +273,14 @@ public class VoronoiTreemap implements Iterable<VoroNode>, StatusObject {
 	}
 
 	private void setRelativePositions(ArrayList<Tuple3ID> relativePositions) {
-		if (relativePositions == null) {
+		if (relativePositions == null) { // it's always null, I think...
 			for (VoroNode voroNode : idToNode.values()) {
-				double x = rand.nextDouble();
-				double y = rand.nextDouble();
-				voroNode.setRelativeVector(new Point2D(x, y));
+				if (voroNode.getRelativeVector() == null) {
+					System.out.println("Setting relativeVector to a random point: " + voroNode.getName());
+					double x = rand.nextDouble();
+					double y = rand.nextDouble();
+					voroNode.setRelativeVector(new Point2D(x, y));
+				}
 			}
 			return;
 		}
@@ -717,11 +720,15 @@ public class VoronoiTreemap implements Iterable<VoroNode>, StatusObject {
 
 		addChildren(idToNode, treeStructure, rootIndex);
 
-		for (VoroNode voroNode : idToNode.values()) {
-			double x = rand.nextDouble();
-			double y = rand.nextDouble();
-			voroNode.setRelativeVector(new Point2D(x, y));
-		}
+		// This is not necessary, we check this later.
+//		for (VoroNode voroNode : idToNode.values()) {
+//			if (voroNode.getRelativeVector() == null) {
+//				System.out.println("setting random relative vector");
+//				double x = rand.nextDouble();
+//				double y = rand.nextDouble();
+//				voroNode.setRelativeVector(new Point2D(x, y));
+//			}
+//		}
 
 		root.setVoroPolygon(rootPolygon);
 	}
@@ -759,6 +766,7 @@ public class VoronoiTreemap implements Iterable<VoroNode>, StatusObject {
 				if(node==null) continue;
 				if (!getUniFormWeights())
 					voroNode.setWeight(node.weight);
+				voroNode.setRelativeVector(node.relativeVector);
 				voroNode.setName(node.name);
 			}
 		}

@@ -44,6 +44,7 @@ public class TreeData {
 		public String name;
 		// weight of this node
 		public double weight=1;
+		public kn.uni.voronoitreemap.j2d.Point2D relativeVector;
 		
 		// relative coordinate of this node
 		public Point2D.Double relativeCoord;
@@ -58,6 +59,14 @@ public class TreeData {
 		if(weight<=0) return;
 		if(!nodeNameToId.containsKey(name)) return;		
 		nodeAtt.get(nodeNameToId.get(name)).weight=weight;
+	}
+
+	public void setRelativeVector(String name, double x, double y){
+		if(!nodeNameToId.containsKey(name)) {
+			System.out.println("Failed setting relativeVector for: " + name);
+			return;
+		}
+		nodeAtt.get(nodeNameToId.get(name)).relativeVector = new kn.uni.voronoitreemap.j2d.Point2D(x, y);
 	}
 	
 	public void addLink(String childName, String parentName){
