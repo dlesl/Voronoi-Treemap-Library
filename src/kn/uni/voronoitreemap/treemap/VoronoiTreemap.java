@@ -185,6 +185,13 @@ public class VoronoiTreemap implements Iterable<VoroNode>, StatusObject {
 		cellQueue.add(root);
 		startComputeThreads();
 	}
+	public Thread computeLockedNewThread() {
+		Thread t = new Thread(() -> {
+			this.computeLocked();
+		});
+		t.start();
+		return t;
+	}
 
 	public void computeLocked() {
 		try {
