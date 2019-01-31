@@ -10,3 +10,6 @@ dist
 /dataPrivate
 /samples
 /build
+.gradle
+.vscode
+.settings
